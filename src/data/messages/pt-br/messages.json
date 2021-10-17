@@ -1,0 +1,4 @@
+{
+    "commandNotFound": "⚠️ Esse comando não existe.",
+    "pingMessage": "⏳ Pong em %TIME% segundos."
+}

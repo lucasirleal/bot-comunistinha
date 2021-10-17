@@ -9,6 +9,7 @@ module.exports = {
     'plugin:import/errors',
     'plugin:import/warnings',
     'plugin:promise/recommended',
+    'plugin:import/typescript',
     'prettier',
   ],
   parserOptions: {
@@ -29,6 +30,7 @@ module.exports = {
         singleQuote: true,
         semi: true,
         endOfLine: 'auto',
+        printWidth: 120,
       },
     ],
   },
