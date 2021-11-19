@@ -1,0 +1,11 @@
+{
+  "commandNotFound": "⚠️ Esse comando não existe.",
+  "pingMessage": "⏳ Pong em %TIME% segundos.",
+  "missingVoiceConnection": "⚠️ Você precisa estar conectado à um chat de voz para usar isso.",
+  "missingPlayArgs": "⚠️ Você precisa digitar o link de uma música ou playlist, do YouTube, ou do Spotify.\nOu simplesmente digitar algo para que o bot busque no YouTube.",
+  "songAddedToQueue": "🎶 **Adicionado à fila:** %SONG%",
+  "noQueue": "⚠️ Não tem nenhuma música na fila ainda. Você pode adicionar mais usando o comando `play`.",
+  "noQueuePosition": "⚠️ Não existe uma música com esse número na fila!",
+  "missingJumpArgs": "⚠️ Você precisa digitar um número para onde quer pular na fila musical.\n\nExemplo: `play 5`",
+  "playingNow": "🎙️ **Tocando agora: ** %SONG%"
+}
