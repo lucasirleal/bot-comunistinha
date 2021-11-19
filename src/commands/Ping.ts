@@ -14,10 +14,8 @@ export const action: CommandBinder = async (bot: Bot, message: Message) => {
   embed = bot.defaultEmbedHandler().setAuthor(embed);
 
   const embedText = bot.defaultEmbedHandler().getMessages().pingMessage;
-  const parsedEmbedText = bot
-    .defaultEmbedHandler()
-    .applyTemplateStrings(embedText, [{ template: '%TIME%', content: timeElapsed.toString() }]);
+  const parsedEmbedText = bot.defaultEmbedHandler().applyTemplateStrings(embedText, [{ template: '%TIME%', content: timeElapsed.toString() }]);
 
   embed.setDescription(parsedEmbedText);
-  message.channel.send({ embeds: [embed] });
+  message.channel.send(embed);
 };

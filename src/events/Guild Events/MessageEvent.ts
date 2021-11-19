@@ -1,8 +1,8 @@
-import { Message } from 'discord.js';
+import { Message, TextChannel } from 'discord.js';
 import { Bot } from '../../classes/Bot';
 import { EventBinder } from '../../interfaces/EventBinder';
 
-export const name = 'messageCreate';
+export const name = 'message';
 export const run: EventBinder = async (bot: Bot, message: Message) => {
   if (!validateCommand(bot, message)) return;
 
@@ -12,7 +12,7 @@ export const run: EventBinder = async (bot: Bot, message: Message) => {
   const firstArg = allArgs.shift() as string;
 
   if (!bot.commander().isValidCommand(firstArg)) {
-    return bot.defaultEmbedHandler().sendCommandNotFound(message.channel);
+    return bot.defaultEmbedHandler().sendCommandNotFound(message.channel as TextChannel);
   }
 
   bot.commander().getCommand(firstArg)?.action(bot, message, allArgs);

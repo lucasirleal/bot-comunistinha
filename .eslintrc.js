@@ -30,7 +30,7 @@ module.exports = {
         singleQuote: true,
         semi: true,
         endOfLine: 'auto',
-        printWidth: 120,
+        printWidth: 150,
       },
     ],
   },

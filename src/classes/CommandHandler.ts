@@ -3,7 +3,6 @@ import path from 'path';
 import { Command } from '../interfaces/Command';
 import { promisify } from 'util';
 import { Collection } from 'discord.js';
-import { CommandBinder } from '../interfaces/CommandBinder';
 
 const globPromise = promisify(glob);
 
