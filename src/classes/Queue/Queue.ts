@@ -62,6 +62,8 @@ export class Queue {
   public async addSpotifyTrackToQueue(trackId: string): Promise<string> {
     const song = await this.spotify.getSong(trackId);
 
+    if (!song) return "";
+    
     this.internalQueue.push(song);
     this.connector.startPlayingQueue();
 
@@ -82,6 +84,7 @@ export class Queue {
 
   public async addFromSearchString(search: string): Promise<string> {
     const song = await this.youtube.getSongFromQuery(search);
+    if (typeof song === 'undefined') return "";
 
     this.internalQueue.push(song);
     this.connector.startPlayingQueue();

@@ -1,7 +1,7 @@
 import ytdl, { MoreVideoDetails } from 'ytdl-core';
 import ytpl, { Item } from 'ytpl';
 import { Song } from '../interfaces/Song';
-import * as youTubeSearch from 'youtube-search-without-api-key';
+import axios from 'axios';
 
 export class YouTubeHandler {
   public async getSong(videoId: string): Promise<Song> {
@@ -14,15 +14,19 @@ export class YouTubeHandler {
     return this.buildSongsFromPlaylist(data.items);
   }
 
-  public async getSongFromQuery(query: string): Promise<Song> {
-    const data = await youTubeSearch.search(query);
-    if (!data.length) throw new Error(`Sem resultados no YouTube para a query [${query}]`);
-
-    return {
-      url: data[0].url,
-      title: data[0].title,
-      videoId: data[0].id.videoId,
-    };
+  public async getSongFromQuery(query: string): Promise<Song | undefined> {
+    try {
+      const response = await axios.get(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q=${encodeURI(query)}&type=video&key=${process.env.BOT_YOUTUBE_TOKEN}&videoCategoryId=10`);
+      if (!response?.data?.items[0].snippet || !response?.data?.items[0].id) throw new Error(`Sem resultados no YouTube para a query [${query}]`);
+      const item = response.data.items[0];
+      return {
+        url: `https://www.youtube.com/watch?v=${item.id.videoId}`,
+        title: item.snippet.title,
+        videoId: item.id.videoId,
+      };
+    } catch (error) {
+      throw error;
+    }
   }
 
   private buildSong(details: MoreVideoDetails): Song {

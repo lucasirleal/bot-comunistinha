@@ -10,7 +10,7 @@ export class SpotifyHandler {
 
   private ytSearch = new YouTubeHandler();
 
-  public async getSong(videoId: string): Promise<Song> {
+  public async getSong(videoId: string): Promise<Song | undefined> {
     const data = await this.spotify.getTrack(videoId);
     return this.ytSearch.getSongFromQuery(data);
   }
@@ -24,7 +24,7 @@ export class SpotifyHandler {
     await Promise.all(
       data.map(async (query) => {
         const ytData = await this.ytSearch.getSongFromQuery(query);
-        returnSongs.push(ytData);
+        if (ytData) returnSongs.push(ytData);
       })
     );
 
