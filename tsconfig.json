@@ -1,6 +1,7 @@
 {
     "compilerOptions": {
-        "target": "ES2021",
+        "target": "esnext",
+        "module": "CommonJS",
         "allowJs": true,
         "skipLibCheck": true,
         "esModuleInterop": true,
@@ -10,5 +11,10 @@
         "moduleResolution": "node",
         "resolveJsonModule": true,
         "isolatedModules": true,
-    }
+        "outDir": "dist"
+    },
+    "include": [
+      "src/**/*",
+      "data/**/*"
+    ]
 }

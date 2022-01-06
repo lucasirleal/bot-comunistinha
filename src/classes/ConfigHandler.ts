@@ -1,8 +1,9 @@
 import path from 'path';
 import { Config } from '../interfaces/Config';
+import * as ConfigFile from '../data/config.json';
 
 export class ConfigHandler {
-  private config: Config = require(path.join(__dirname, '/../data/config.json'));
+  private config: Config = ConfigFile as Config;
 
   public async reloadConfig() {
     this.config = await require(path.join(__dirname, '/../data/config.json'));
