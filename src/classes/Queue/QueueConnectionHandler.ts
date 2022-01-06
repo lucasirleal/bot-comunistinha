@@ -6,6 +6,7 @@ export class QueueConnectionHandler {
   private queue: Queue;
   private connection: VoiceConnection | undefined;
   private currentDispatcher: StreamDispatcher | undefined;
+  private playing: boolean = false;
 
   public constructor(queue: Queue) {
     this.queue = queue;
@@ -38,7 +39,7 @@ export class QueueConnectionHandler {
 
   public startPlayingQueue(force = false, channelToLogChanges: TextChannel | undefined = undefined) {
     if (!this.isConnectedToVoice) return;
-    if (this.currentDispatcher) {
+    if (this.currentDispatcher && this.playing) {
       if (!force) return;
       this.currentDispatcher.destroy();
     }
@@ -65,18 +66,27 @@ export class QueueConnectionHandler {
   }
 
   private bindDispatcherListeners(dispatcher: StreamDispatcher) {
-    dispatcher.on('error', (error) => console.log(`🟠 Erro ao tocar música: ${error}.`));
-    dispatcher.on('finish', () => this.moveQueueFoward());
+    dispatcher.on('error', (error) => {
+      this.playing = false;
+      this.moveQueueFoward();
+      console.log(`🟠 Erro ao tocar música: ${error}.`)
+    });
+    dispatcher.on('start', () => {
+      this.playing = true;
+      console.log(`🟢 Tocando agora: [${this.queue.getCurrentSongIndex()}] ${this.queue.getQueue()[this.queue.getCurrentSongIndex()].title}`)
+    });
+    dispatcher.on('finish', () => {
+      this.playing = false;
+      this.moveQueueFoward();
+    });
   }
 
   private moveQueueFoward() {
     const nextIndex = this.queue.getCurrentSongIndex() + 1;
-
-    if (nextIndex >= this.queue.getQueue().length) {
-      return this.queue.setCurrentSongIndex(0);
-    }
-
     this.queue.setCurrentSongIndex(nextIndex);
+
+    if (nextIndex >= this.queue.getQueue().length) return;
+
     this.startPlayingQueue(true);
   }
 }
